@@ -9,6 +9,8 @@ var search_mice_btn = document.querySelector('.search_mice_btn');
 mobile_voice_search_section = document.querySelector('.mobile_voice_search_section');
 mobile_voice_search_sub_box = document.querySelector('.mobile_voice_search_sub_box');
 
+mobile_voice_search_sub_box_full = document.querySelector('.mobile_voice_search_sub_box_full');
+
 var speechresult = '';
 var resulttimeout;
 
@@ -37,7 +39,8 @@ if (SpeechRecognition) {
     mobile_voice_search_sub_box.style.display = "block";
 
     setTimeout(function(){
-      mobile_voice_search_sub_box.classList.add('open');
+      //mobile_voice_search_sub_box
+      mobile_voice_search_sub_box_full.classList.add('open');
       mobile_voice_search_section.classList.add('open');
     },1)
     setTimeout(function(){
@@ -51,7 +54,8 @@ if (SpeechRecognition) {
   }
 
   function close_voice_search_box() {
-    mobile_voice_search_sub_box.classList.remove('open');
+    //mobile_voice_search_sub_box
+    mobile_voice_search_sub_box_full.classList.remove('open');
     mobile_voice_search_section.classList.remove('open');
     setTimeout(function(){
     mobile_voice_search_section .style.display = "none";
@@ -110,7 +114,8 @@ if (SpeechRecognition) {
         searchFormInput.value = transcript;
         //mobile_voice_search_section .style.display = "none";
         //mobile_voice_search_sub_box.style.display = "none";
-        close_voice_search_box_herf();
+        //close_voice_search_box_herf();
+        history.back();
         searchFormInput.focus();
         get_search_value_mobile()
       }, 1500)

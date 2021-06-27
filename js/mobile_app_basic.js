@@ -100,91 +100,35 @@ function opencartboxexit() {
     cart_box_open_not = false;
 }
 
-history_state_arr = [];
 
-var history_length_negative = 0;
+window.addEventListener('backward',function(e){
+    var herf_post = e.detail.post;
 
-if (history.length != 1) {
-    console.log("open in new tab")
-    history_length_negative = history.length;
-    --history_length_negative
-
-}
-else {
-    console.log("reidircted")
-}
-
-history_state_arr.push(window.location.href);
-
-window.addEventListener('popstate', function () {
-
-    if (history_state_arr[0]) {
-
-        let history_state_arr_item = window.location.href;
-
-        let history_state_arr_index = history_state_arr.indexOf(history_state_arr_item);
-
-        post_herf = history_state_arr[history_state_arr_index + 1];
-        current_herf = history_state_arr[history_state_arr_index];
-        pre_herf = history_state_arr[history_state_arr_index - 1];
-
-        if (history_state_arr[history_state_arr_index]) {
-            //console.log("already exist " + history_state_arr[history_state_arr_index])
-
-            //console.warn("backward")
-
-            //console.log("post_herf "+post_herf);
-            //console.log("current_herf "+current_herf);
-            //console.log(" pre_herf "+ pre_herf);
-            try {
-                if (post_herf.includes("menu")) {
-                    //console.log("close menu")
-                    tssClose();
-                }
-
-                if (post_herf.includes("search")) {
-                    //console.log("close search")
-                    opensuggestionboxexit();
-                }
-
-                if (post_herf.includes("voice")) {
-                    //console.log("close voice")
-                    close_voice_search_box();
-                }
-
-                if (post_herf.includes("results")) {
-                    //console.log("close results")
-
-                }
-
-                if (post_herf.includes("notification")) {
-                    //console.log("close notification")
-                    opennotificationboxexit();
-                }
-
-                if (post_herf.includes("cart")) {
-                   //console.log("close cart")
-                    opencartboxexit();
-                }
-            }
-            catch {
-
-            }
-
-
-            if (history_state_arr_item == history_state_arr[0]) {
-                //console.log("main")
-                history_state_arr = [];
-                history_state_arr.push(history_state_arr_item);
-            }
-        }
-
-        else {
-            //console.log("new entery" + history_state_arr_item)
-            //console.warn("forward")
-            history_state_arr.push(history_state_arr_item);
-
-        }
+    herf_post = herf_post.split('#')
+    herf_post = herf_post[1]
+    
+    if(herf_post == 'menu'){
+        tssClose();
     }
-    //console.log(history_state_arr)
+
+    if(herf_post == 'search'){
+        opensuggestionboxexit();
+    }
+
+    if(herf_post == 'voice'){
+        close_voice_search_box();
+    }
+
+    if(herf_post == 'results'){
+        
+    }
+
+    if(herf_post == 'notification'){
+        opennotificationboxexit()
+    }
+
+    if(herf_post == 'cart'){
+        opencartboxexit()
+    }
+    
 });

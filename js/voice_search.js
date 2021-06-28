@@ -45,7 +45,7 @@ if (SpeechRecognition) {
     },1)
     setTimeout(function(){
       recognition.start();
-    },260)
+    },350)
     voice_search_box_open_not = true;
   }
 
@@ -60,7 +60,7 @@ if (SpeechRecognition) {
     setTimeout(function(){
     mobile_voice_search_section .style.display = "none";
     mobile_voice_search_sub_box.style.display = "none";
-    },255)
+    },350)
     recognition.stop();
     voice_search_box_open_not = false;
   }

@@ -46,7 +46,7 @@ function opennotificationboxexit() {
     mobile_notification_section.classList.remove("open")
     setTimeout(function () {
         mobile_notification_section.style.display = "none";
-    }, 255)
+    }, 350)
     // enable scroll start
     document.body.style.overflow = '';
     document.body.classList.remove('scroll_hiden');
@@ -88,7 +88,7 @@ function opencartboxexit() {
     mobile_cart_section.classList.remove("open")
     setTimeout(function () {
         mobile_cart_section.style.display = "none";
-    }, 255)
+    }, 350)
     // enable scroll start
     document.body.style.overflow = '';
     document.body.classList.remove('scroll_hiden');
@@ -100,35 +100,54 @@ function opencartboxexit() {
     cart_box_open_not = false;
 }
 
+if (window.location.href.includes('#')) {
+    window_herf = window.location.href.split('#')
+    window_herf = window_herf[0]
+    history.replaceState(null, null, window_herf);
+}
+else {
 
-window.addEventListener('backward',function(e){
+}
+
+var history_change_length = null;
+
+window.addEventListener('backward', function (e) {
+
+    --history_change_length
     var herf_post = e.detail.post;
 
     herf_post = herf_post.split('#')
     herf_post = herf_post[1]
-    
-    if(herf_post == 'menu'){
+
+    if (herf_post == 'menu') {
         tssClose();
     }
 
-    if(herf_post == 'search'){
+    if (herf_post == 'search') {
         opensuggestionboxexit();
     }
 
-    if(herf_post == 'voice'){
+    if (herf_post == 'voice') {
         close_voice_search_box();
     }
 
-    if(herf_post == 'results'){
-        
+    if (herf_post == 'results') {
+
     }
 
-    if(herf_post == 'notification'){
+    if (herf_post == 'notification') {
         opennotificationboxexit()
     }
 
-    if(herf_post == 'cart'){
+    if (herf_post == 'cart') {
         opencartboxexit()
     }
-    
+
+});
+
+window.addEventListener('doubleclickback', function (e) {
+    console.log(e.detail.type)
+    for (let index = 0; index < history.length; index++) {
+        history.back();
+    }
 });

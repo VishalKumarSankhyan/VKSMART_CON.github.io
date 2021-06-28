@@ -596,7 +596,7 @@ function opensuggestionbox() {
 
   setTimeout(function(){
     document.getElementById("mobile_search_Input").focus();
-  },260)
+  },350)
 
   delete_all_show_search_history()
   show_search_history()
@@ -613,7 +613,7 @@ function opensuggestionboxexit() {
 
   setTimeout(function(){
     mobile_search_suggestion_section.style.display = "none";
-  },255)
+  },350)
   //mobile_search_suggestion_section.style.display = "none";
 
   // enable scroll start

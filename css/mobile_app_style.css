@@ -800,17 +800,20 @@ background:#fff;
 
 .mobile_voice_search_sub_box{
     display: none;
-    position: fixed;
+    position: absolute;
     left: 0;
-    bottom: 0;
     right: 0;
+    top: 0;
+    bottom: 0;
     width: 100%;
-    height: 190px;
+    height: 200px;
+    margin: auto;
 }
 
 .mobile_voice_search_sub_box_full{
-    width: 100%;
+    width: 95%;
     height: 100%;
+    margin: auto;
     will-change: transform;
     transition: transform 0.35s ease-in-out;
     transform: translateY(100vh);
@@ -821,32 +824,40 @@ background:#fff;
 .voice_serch_sub_box_close{
     cursor: pointer;
     position: absolute;
-    right: 15px;
+    right: 10px;
     font-size: 25px;
     top: 0;
     color: white;
     text-align: end;
-    width: 100%;
+    width: 95%;
 }
 
 .voice_serch_sub_box {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 150px;
+    height: 160px;
     background: #ffff;
-    border-radius: 15px 15px 0px 0px;
+    /*border-radius: 15px 15px 0px 0px;*/
+    border-radius: 10px;
+    box-shadow: 0 1px 5px 0 rgb(32 33 36 / 20%);
+    text-align: center;
 }
 
 .search_mice_info {
     cursor: default;
     font-size: 21px;
-    margin: 0px 10px;
-    margin-top: 10px;
     max-height: 50px;
     height: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
+    resize: none;
+    width: 95%!important;
+    margin: auto!important;
+    margin-top: 12px!important;
+    border: none;
+    outline: none;
 }
 .search_mice_btn {
     cursor: pointer;
@@ -864,7 +875,7 @@ background:#fff;
     right: 0;
     text-align: center;
     margin: 0 auto;
-    bottom: 15px;
+    bottom: 20px;
 }
 .search_mice_main_btn {
     padding: 10px 18px;
@@ -1257,18 +1268,4 @@ background:#fff;
 
 .main_content_of_body{
     height: 1000px;
-}
-
-.aherf{
-    display: flex;
-    width: 100%;
-    flex: 0 0 100%;
-}
-
-.aherf a{
-    width: 100%;
-    padding: 4px 0px;
-    background: white;
-    margin: 2px;
-    text-align: center;
 }

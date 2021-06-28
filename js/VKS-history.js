@@ -1,15 +1,14 @@
 /*
   * Author: Vishal Kumar Sankhyan
-  * Under MIT License
+  * Free for Personal Use
   
   * Detect history chage on history.pushState && history.replaceState
-
   * Detect "backward" | "forward" | "double click back"
 
-  * EventLisntener historychange
-  * EventLisntener forward
-  * EventLisntener backward
-  * EventLisntener doubleclickback
+  * EventLisntener for historychange
+  * EventLisntener for forward
+  * EventLisntener for backward
+  * EventLisntener for doubleclickback
  
   * Get pre herf
   * Get current herf
@@ -18,7 +17,7 @@
   * Get length
 */
 
-// CustomEvent
+/* -------------------------------------------------- CustomEvent -------------------------------------------------- */
 (function () {
   if (typeof window.CustomEvent === "function") return false;
   function CustomEvent(event, params) {
@@ -28,77 +27,74 @@
     return evt;
   }
   window.CustomEvent = CustomEvent;
-
 })();
 
 (function () {
   let previous_history = window.location.href;
-
   setInterval(function () {
     if (previous_history != window.location.href) {
+      event_type = 'historychange';
       var event_data = {
+        type: event_type,
         pre: previous_history,
         current: window.location.href
       }
-      window.dispatchEvent(new CustomEvent('historychange', { bubbles: true, cancelable: true, detail: event_data }))
       previous_history = window.location.href;
+      window.dispatchEvent(new CustomEvent(event_type, { bubbles: true, cancelable: true, detail: event_data }))
     }
   });
-
 })();
 
 (function () {
-  history_states = [];
-  event_states = [];
-  let states_length = null;
-  let history_states_index = null;
-  let history_states_item = null;
+  history_status = [];
+  event_status = [];
+  let status_length = null;
+  let history_status_index = null;
+  let history_status_item = null;
   let pre = null;
   let current = null;
   let post = null;
   var double_count = 0;
   var double_timeout;
 
-  history_states.push(window.location.href);
+  history_status.push(window.location.href);
 
   window.addEventListener('historychange', function () {
 
-    if (history_states[0]) {
+    if (history_status[0]) {
 
-      history_states_item = window.location.href;
-      history_states_index = history_states.indexOf(history_states_item);
+      history_status_item = window.location.href;
+      history_status_index = history_status.indexOf(history_status_item);
 
-      states_length = history_states.length;
+      status_length = history_status.length;
 
-      if (history_states[history_states_index]) {
+      if (history_status[history_status_index]) {
       }
       else {
-        history_states.push(history_states_item);
+        history_status.push(history_status_item);
       }
 
-      history_states_index = history_states.indexOf(history_states_item);
+      history_status_index = history_status.indexOf(history_status_item);
 
-      if (history_states_index == 0) {
-        pre = history_states[history_states_index - 1];
-        current = history_states[history_states_index];
-        post = history_states[1];
+      if (history_status_index == 0) {
+        pre = history_status[history_status_index - 1];
+        current = history_status[history_status_index];
+        post = history_status[1];
       }
       else {
-        pre = history_states[history_states_index - 1];
-        current = history_states[history_states_index];
-        post = history_states[history_states_index + 1];
+        pre = history_status[history_status_index - 1];
+        current = history_status[history_status_index];
+        post = history_status[history_status_index + 1];
       }
     }
-
     // for forward  
-    if (history_states.indexOf(pre) < history_states.indexOf(current) && history_states.indexOf(post) == -1 && history_states_index > states_length - 1) {
+    if (history_status.indexOf(pre) < history_status.indexOf(current) && history_status.indexOf(post) == -1 && history_status_index > status_length - 1) {
       eventType = 'forward';
     }
-
     // for backward  
-    if (history_states.indexOf(pre) < history_states.indexOf(current) < history_states.indexOf(post) && history_states_index < states_length) {
+    if (history_status.indexOf(pre) < history_status.indexOf(current) < history_status.indexOf(post) && history_status_index < status_length) {
       eventType = 'backward';
-      history_states.pop();
+      history_status.pop();
       ++double_count
 
       clearTimeout(double_timeout);
@@ -106,16 +102,14 @@
       if (double_count == 2) {
         eventType = 'doubleclickback';
       }
-
       double_timeout = setTimeout(function () {
         double_count = 0;
       }, 550);
     }
-
     // for backward  
-    if (history_states.indexOf(pre) == -1 && history_states.indexOf(current) < history_states.indexOf(post) && history_states_index < states_length) {
+    if (history_status.indexOf(pre) == -1 && history_status.indexOf(current) < history_status.indexOf(post) && history_status_index < status_length) {
       eventType = 'backward';
-      history_states.pop();
+      history_status.pop();
       ++double_count
 
       clearTimeout(double_timeout);
@@ -123,42 +117,38 @@
       if (double_count == 2) {
         eventType = 'doubleclickback';
       }
-
       double_timeout = setTimeout(function () {
         double_count = 0;
       }, 550);
     }
-    event_states = [];
-    event_states.push(pre)
-    event_states.push(current)
-    event_states.push(post)
+    event_status = [];
+    event_status.push(pre)
+    event_status.push(current)
+    event_status.push(post)
 
     var eventData = {
-      dir: eventType,
+      type: eventType,
       pre: pre,
       current: current,
       post: post,
-      status: event_states,
-      length: event_states.length
+      status: event_status,
+      length: event_status.length
     };
-
-    window.dispatchEvent(new CustomEvent(eventType, { bubbles: true, cancelable: true, detail: eventData }))
     previous_history = window.location.href;
-
+    window.dispatchEvent(new CustomEvent(eventType, { bubbles: true, cancelable: true, detail: eventData }))
   });
-})
-  ();
+})();
 
-/******************************************************************
-                        addEventLisnteners
-          addEventListener('historychange',function(e){});
-          addEventListener('forward', function(e){});
-          addEventListener('backward', function(e){});
-          addEventListener('doubleclickback' ,function(){});
-******************************************************************/
+/****************************************************************************************************
+                                      CustomEventLisnteners
+                          addEventListener('historychange'   ,function(e){});
+                          addEventListener('forward'         ,function(e){});
+                          addEventListener('backward'        ,function(e){});
+                          addEventListener('doubleclickback' ,function(e){});
+*****************************************************************************************************/
 
 /**
- * @param e.detail.dir        "backward" | "forward" | "doubleclickback"
+ * @param e.detail.type        "historychange" | "forward" | "backward" | "doubleclickback"
  * @param e.detail.pre         url
  * @param e.detail.current     url
  * @param e.detail.post        url
